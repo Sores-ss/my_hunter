@@ -30,7 +30,7 @@ void update_duck_position(sfSprite *duck_sprite, float *x_pos,
 }
 
 void update_duck_animation(sfSprite *duck_sprite,
-    duck_animation__t *animation, float frame_duration, float seconds)
+    duck_animation_t *animation, float frame_duration, float seconds)
 {
     const int frame_width = 110;
     const int frame_height = 110;
@@ -53,7 +53,7 @@ void animate_duck(sfSprite *duck_sprite, sfClock *clock)
 {
     static float x_pos = 0;
     static float y_pos = 0;
-    static duck_animation__t animation = {0, 0.0f};
+    static duck_animation_t animation = {0, 0.0f};
     const float speed = 2.0f;
     const float frame_duration = 0.2f;
     sfTime delta_time = sfClock_getElapsedTime(clock);
