@@ -7,23 +7,6 @@
 
 #include "../my.h"
 
-static sfSprite *create_duck_sprite(void)
-{
-    sfSprite *duck_sprite = sfSprite_create();
-    sfTexture *duck_texture = sfTexture_createFromFile("sprites/duck.png",
-    NULL);
-
-    if (!duck_sprite || !duck_texture) {
-        if (!duck_sprite)
-            sfSprite_destroy(duck_sprite);
-        if (!duck_texture)
-            sfTexture_destroy(duck_texture);
-        return NULL;
-    }
-    sfSprite_setTexture(duck_sprite, duck_texture, sfTrue);
-    return duck_sprite;
-}
-
 void draw_sprites(sfRenderWindow *window, sfSprite *background,
     sfSprite *duck_sprite)
 {
@@ -41,14 +24,13 @@ void display_background(sfTexture *texture, sfRenderWindow *window,
     sfEvent event;
     sfClock *clock = sfClock_create();
 
-    if (!texture || !duck_sprite || !clock)
-        return;
     sfSprite_setTexture(background, texture, sfTrue);
     sfSprite_setPosition(duck_sprite, duck_pos);
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event))
             handle_events(window, event);
         animate_and_draw(window, background, duck_sprite, clock);
+        sfRenderWindow_display(window);
     }
     sfSprite_destroy(duck_sprite);
     sfClock_destroy(clock);
