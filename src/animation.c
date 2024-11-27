@@ -51,7 +51,7 @@ void update_duck_animation(sfSprite *duck_sprite,
 
 void animate_duck(sfSprite *duck_sprite, sfClock *clock)
 {
-    static float x_pos = 0;
+    static float x_pos = -400;
     static float y_pos = 0;
     static duck_animation_t animation = {0, 0.0f};
     const float speed = 2.0f;
