@@ -50,12 +50,13 @@ int start_game(void)
     sfRenderWindow *window = NULL;
     sfSprite *background = NULL;
     sfTexture *texture = NULL;
+    sfEvent event;
 
     if (initialize_resources(&window, &background, &texture) == EXIT_FAILURE) {
         cleanup_resources(window, background, texture);
         return EXIT_FAILURE;
     }
-    display_background(texture, window, background);
+    display_all(texture, window, background, event);
     cleanup_resources(window, background, texture);
     return EXIT_SUCCESS;
 }

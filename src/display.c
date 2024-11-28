@@ -8,30 +8,46 @@
 #include "../my.h"
 
 void draw_sprites(sfRenderWindow *window, sfSprite *background,
-    sfSprite *duck_sprite)
+    duck_t *ducks)
 {
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_drawSprite(window, background, NULL);
-    sfRenderWindow_drawSprite(window, duck_sprite, NULL);
+    draw_ducks(window, ducks);
     sfRenderWindow_display(window);
 }
 
-void display_background(sfTexture *texture, sfRenderWindow *window,
-    sfSprite *background)
+void reset_duck(duck_t *duck)
 {
-    sfVector2f duck_pos = {0, 0};
-    sfSprite *duck_sprite = create_duck_sprite();
-    sfEvent event;
-    sfClock *clock = sfClock_create();
+    duck->position = (sfVector2f){-100, rand() % 600};
+    duck->speed_x = 0.1f + (rand() % 2 * 0.05f);
+    duck->speed_y = (rand() % 2 - 1.0f) * 0.1f;
+    duck->animation_frame = 0;
+    duck->animation_time = 0.0f;
+    duck->is_active = 1;
+}
 
+void display_loop(sfRenderWindow *window, sfEvent event)
+{
+    while (sfRenderWindow_pollEvent(window, &event)) {
+            if (event.type == sfEvtClosed)
+                sfRenderWindow_close(window);
+        }
+}
+
+void display_all(sfTexture *texture, sfRenderWindow *window,
+    sfSprite *background, sfEvent event)
+{
+    sfClock *clock = sfClock_create();
+    duck_t ducks[MAX_DUCKS];
+    float delta_time = 0.0f;
+
+    initialize_and_spawn_ducks(ducks);
     sfSprite_setTexture(background, texture, sfTrue);
-    sfSprite_setPosition(duck_sprite, duck_pos);
     while (sfRenderWindow_isOpen(window)) {
-        while (sfRenderWindow_pollEvent(window, &event))
-            handle_events(window, event);
-        animate_and_draw(window, background, duck_sprite, clock);
-        sfRenderWindow_display(window);
+        display_loop(window, event);
+        delta_time = sfClock_restart(clock).microseconds / 1000000.0f;
+        update_ducks_position(ducks, delta_time);
+        draw_sprites(window, background, ducks);
     }
-    sfSprite_destroy(duck_sprite);
     sfClock_destroy(clock);
 }

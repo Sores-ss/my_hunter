@@ -5,50 +5,41 @@
 ** my.h
 */
 
-#ifndef MY_H_
-    #define MY_H_
+#ifndef MY_H
+    #define MY_H
+
     #include <SFML/Graphics.h>
-    #include <SFML/Window.h>
-    #include <SFML/System.h>
     #include <stdlib.h>
-typedef struct duck_animation_s {
-    int current_frame;
-    float animation_time;
-} duck_animation_t;
+    #include <time.h>
+
+    #define MAX_DUCKS 5
+    #define FRAME_DURATION 0.1f
+    #define TOTAL_FRAMES 3
+    #define FRAME_WIDTH 111
+    #define FRAME_HEIGHT 111
+
 typedef struct duck_s {
     sfSprite *sprite;
     sfVector2f position;
-    float speed;
-    duck_animation_t animation;
+    float speed_x;
+    float speed_y;
+    int animation_frame;
+    float animation_time;
+    int is_active;
 } duck_t;
-typedef struct cursor_s {
-    sfSprite *sprite;
-    sfVector2f position;
-} cursor_t;
-typedef struct game_window_s {
-    sfRenderWindow *window;
-    sfSprite *background;
-    sfTexture *background_texture;
-} game_window_t;
-typedef struct score_s {
-    int current_score;
-    int high_score;
-} score_t;
+
+void draw_sprites(sfRenderWindow *window, sfSprite *background, duck_t *ducks);
+void reset_duck(duck_t *duck);
+void display_all(sfTexture *texture, sfRenderWindow *window,
+    sfSprite *background, sfEvent event);
+void initialize_and_spawn_ducks(duck_t *ducks);
+void spawn_new_duck(duck_t *ducks);
+void update_ducks_position(duck_t *ducks, float delta_time);
+void draw_ducks(sfRenderWindow *window, duck_t *ducks);
+sfSprite *create_duck_sprite(void);
+void animate_duck(duck_t *duck, float delta_time);
+void update_ducks_pos2(duck_t *ducks, int i);
 
 int start_game(void);
-void display_background(sfTexture *texture, sfRenderWindow *window,
-    sfSprite *sprite);
-void handle_events(sfRenderWindow *window, sfEvent event);
-void sfclose(sfEvent event, sfRenderWindow *window);
-void draw_sprites(sfRenderWindow *window, sfSprite *background,
-    sfSprite *duck_sprite);
-void animate_and_draw(sfRenderWindow *window, sfSprite *background,
-    sfSprite *duck_sprite, sfClock *clock);
-void update_duck_position(sfSprite *duck_sprite, float *x_pos,
-    float *y_pos, float speed);
-void update_duck_animation(sfSprite *duck_sprite, duck_animation_t *animation,
-    float frame_duration, float seconds);
-void update_cursor(sfRenderWindow *window, sfSprite *cursor_sprite);
-int check_duck_click(sfSprite *duck_sprite, sfVector2i mouse_pos);
-sfSprite *create_duck_sprite(void);
+
 #endif

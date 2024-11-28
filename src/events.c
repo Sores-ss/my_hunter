@@ -12,9 +12,3 @@ void sfclose(sfEvent event, sfRenderWindow *window)
     if (event.type == sfEvtClosed)
         sfRenderWindow_close(window);
 }
-
-void handle_events(sfRenderWindow *window, sfEvent event)
-{
-    if (event.type == sfEvtClosed)
-        sfclose(event, window);
-}
