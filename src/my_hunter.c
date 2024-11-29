@@ -8,16 +8,6 @@
 #include "../my.h"
 #include <SFML/Graphics.h>
 
-/*
-** EPITECH PROJECT, 2024
-** B-MUL-100-LIL-1-1-myhunter-eros.delianne-le-boucher
-** File description:
-** my_hunter.c
-*/
-
-#include "../my.h"
-#include <SFML/Graphics.h>
-
 int launchmusic(resources_t *resources)
 {
     resources->music = sfMusic_createFromFile("audio/opening.ogg");
