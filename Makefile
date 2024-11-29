@@ -10,12 +10,14 @@ SRC    =    main.c   \
 
 NAME    =    my_hunter
 
-CFLAGS    =    -W -Wall -Wextra -lcsfml-graphics -lcsfml-window -lcsfml-system
+CFLAGS    =    -W -Wall -Wextra
+
+CSFMLFLAGS	=	-lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio
 
 all:    $(NAME)
 
 $(NAME):
-	gcc -g -o $(NAME) $(SRC) $(CFLAGS)
+	gcc -g -o $(NAME) $(SRC) $(CFLAGS) $(CSFMLFLAGS)
 
 clean:
 	rm -f $(OBJ)

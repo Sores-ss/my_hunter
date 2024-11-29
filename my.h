@@ -9,6 +9,7 @@
     #define MY_H
 
     #include <SFML/Graphics.h>
+    #include <SFML/Audio.h>
     #include <stdlib.h>
     #include <time.h>
 
@@ -28,10 +29,17 @@ typedef struct duck_s {
     int is_active;
 } duck_t;
 
-void draw_sprites(sfRenderWindow *window, sfSprite *background, duck_t *ducks);
+typedef struct resources_s {
+    sfRenderWindow *window;
+    sfSprite *background;
+    sfTexture *texture;
+    sfSprite *cursor_sprite;
+    sfMusic *music;
+} resources_t;
+
+void draw_sprites(resources_t *resources, duck_t *ducks);
 void reset_duck(duck_t *duck);
-void display_all(sfTexture *texture, sfRenderWindow *window,
-    sfSprite *background, sfEvent event);
+void display_all(resources_t *resources);
 void initialize_and_spawn_ducks(duck_t *ducks);
 void spawn_new_duck(duck_t *ducks);
 void update_ducks_position(duck_t *ducks, float delta_time);
@@ -39,6 +47,8 @@ void draw_ducks(sfRenderWindow *window, duck_t *ducks);
 sfSprite *create_duck_sprite(void);
 void animate_duck(duck_t *duck, float delta_time);
 void update_ducks_pos2(duck_t *ducks, int i);
+void handle_events(sfRenderWindow *window, sfEvent event, duck_t *ducks);
+void cleanup_resources(resources_t *resources);
 
 int start_game(void);
 
