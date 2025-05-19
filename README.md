@@ -1,3 +1,6 @@
+### 🌍 Language | Langue  
+[🇫🇷 Français](./README.md) • [🇬🇧 English](./README.en.md)  
+
 # 🦆 MY_HUNTER - Duck&Hunt (en CSFML)
 
 ## 🎯 Description du projet:
